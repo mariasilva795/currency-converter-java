@@ -1,6 +1,6 @@
-package Queries;
+package Records;
 
 import java.util.ArrayList;
 
-public record Currency(String fromCode, String toCode, double conversionRate, double conversionResult, ArrayList<ArrayList<String>> supported_codes) {
+public record Currency(String base_code, String target_code, double conversion_rate, double conversion_result, ArrayList<ArrayList<String>> supported_codes) {
 }
