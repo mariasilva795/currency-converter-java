@@ -4,6 +4,7 @@ import Records.Currency;
 import Records.CurrencyHistory;
 import Services.CurrencyHistoryManager;
 import Services.CurrencyServices;
+import Utils.NotFoundCountry;
 
 import java.io.FileWriter;
 import java.time.Instant;
@@ -34,11 +35,21 @@ public class MainScreen {
 
         System.out.print("FROM:::" );
         base_currency = sc.nextInt();
+
+        if (base_currency < 0 || base_currency >= listCountrys.size()) {
+            throw new NotFoundCountry();
+        }
+
         base_currency_code = listCountrys.get(base_currency).get(0);
         System.out.printf("Currency FROM: %s - %s\n\n", base_currency_code, listCountrys.get(base_currency).get(1));
 
         System.out.print("TO:::::" );
         target_code = sc.nextInt();
+
+        if (target_code < 0 || target_code >= listCountrys.size()) {
+            throw new NotFoundCountry("Invalid 'FROM' country index.");
+        }
+
         target_code_value =  listCountrys.get(target_code).get(0);
 
         System.out.printf("Currency TO: %s - %s\n\n", target_code_value, listCountrys.get(target_code).get(1));

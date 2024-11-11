@@ -13,6 +13,7 @@ import Records.Currency;
 //import Services.CurrencyHistoryManager;
 import Services.CurrencyHistoryManager;
 import Services.CurrencyServices;
+import Utils.NotFoundCountry;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
@@ -48,10 +49,9 @@ public class Main {
                         mainScreen.showMainScreen(historyManager);
                         break;
                     case 2:
-
-                        if(historyManager.getHistory().isEmpty()){
+                        if (historyManager.getHistory().isEmpty()) {
                             System.out.println("Empty List");
-                        }else {
+                        } else {
                             historyView.show(historyManager.getHistory());
                             break;
                         }
@@ -59,6 +59,8 @@ public class Main {
                         System.out.println("Thank you for using our conversion system!");
                 }
             }
+        }catch (NotFoundCountry e) {
+             System.out.println(e.getMessage());
         } catch (InputMismatchException e){
             System.out.println("You must add a number to the menu");
         } catch(IndexOutOfBoundsException e){
