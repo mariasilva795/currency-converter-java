@@ -2,14 +2,17 @@ package views;
 
 import Records.Currency;
 import Records.CurrencyHistory;
+import Services.CurrencyHistoryManager;
 import Services.CurrencyServices;
 
+import java.time.Instant;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.Scanner;
 import java.time.LocalDateTime;
 
 public class MainScreen {
-    public void showMainScreen() {
+    public void showMainScreen(CurrencyHistoryManager historyManager) {
 
         int target_code, base_currency;
         double amount;
@@ -17,6 +20,7 @@ public class MainScreen {
 
         CurrencyServices record = new CurrencyServices();
         Currency codes = record.showCurrencyCodes();
+
         ArrayList<ArrayList<String>> listCountrys = codes.supported_codes();
 
         Scanner sc = new Scanner(System.in);
@@ -50,10 +54,11 @@ public class MainScreen {
                         """, amount, base_currency_code, target_code_value, currency.conversion_result(), listCountrys.get(target_code).get(0));
 
 
-//        ArrayList<CurrencyHistory> listHistoryCurrency = new ArrayList();
-//        LocalDateTime dateTime = null;
-//        CurrencyHistory historyCurrency = new CurrencyHistory(base_currency_code, amount, target_code_value, currency.conversion_result(), dateTime.now().toString() );
-//        listHistoryCurrency.add(historyCurrency);
+        LocalDateTime dateTime = LocalDateTime.now();
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss");
+        String formattedDate = dateTime.format(formatter);
+
+        historyManager.addHistory(base_currency_code, amount, target_code_value, currency.conversion_result(), formattedDate);
 
         System.out.println("\nThank you for using the currency converter!");
     }

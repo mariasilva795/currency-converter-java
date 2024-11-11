@@ -10,17 +10,24 @@ import java.text.DecimalFormat;
 import java.util.*;
 
 import Records.Currency;
+//import Services.CurrencyHistoryManager;
+import Services.CurrencyHistoryManager;
 import Services.CurrencyServices;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 
 import com.google.gson.Gson;
+import views.CurrencyHistoryView;
 import views.MainScreen;
 
 public class Main {
 
     private static final String API_KEY = "c6b78493c77b8545bd8c3d70";
     public static void  main(String[] args) {
+        MainScreen mainScreen = new MainScreen();
+        CurrencyHistoryView historyView = new CurrencyHistoryView();
+        CurrencyHistoryManager historyManager = new CurrencyHistoryManager();
+
         Scanner sc = new Scanner(System.in);
         int option = 0;
         try {
@@ -38,10 +45,16 @@ public class Main {
                 option = sc.nextInt();
                 switch (option) {
                     case 1:
-                        MainScreen mainScreen = new MainScreen();
-                        mainScreen.showMainScreen();
+                        mainScreen.showMainScreen(historyManager);
                         break;
-
+                    case 2:
+                        if(historyManager.getHistory().isEmpty()){
+                            System.out.println("Empty List");
+                        }else {
+                            historyView.show(historyManager.getHistory());
+                        }
+                    case 9:
+                        System.out.println("Thank you for using our conversion system!");
                 }
             }
         } catch (InputMismatchException e){

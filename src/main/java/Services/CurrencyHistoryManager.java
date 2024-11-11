@@ -2,33 +2,28 @@ package Services;
 
 import Records.CurrencyHistory;
 
-import java.util.ArrayList;
-
-/*
-
-import Records.CurrencyHistory;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 public class CurrencyHistoryManager {
+
     private final ArrayList<CurrencyHistory> listHistoryCurrency = new ArrayList<>();
 
-    public void addHistory(String baseCurrencyCode, double amount, String targetCurrencyCode, double conversionResult) {
+    public void addHistory(String baseCurrencyCode, double amount, String targetCurrencyCode, double conversionResult, String string) {
+
         CurrencyHistory historyCurrency = new CurrencyHistory(
-            baseCurrencyCode,
-            amount,
-            targetCurrencyCode,
-            conversionResult,
-            LocalDateTime.now().toString()
+                baseCurrencyCode,
+                amount,
+                targetCurrencyCode,
+                conversionResult,
+                LocalDateTime.now().toString()
         );
+
         listHistoryCurrency.add(historyCurrency);
     }
+
+    public List<CurrencyHistory> getHistory(){
+        return listHistoryCurrency;
+    }
 }
- */
-//public class CurrencyHistoryManager {
-//    private final ArrayList<CurrencyHistory> listHistoryCurrency = new ArrayList<>();
-//    public void addHistory(CurrencyHistory)
-//}
-
-
