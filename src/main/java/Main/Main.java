@@ -48,10 +48,12 @@ public class Main {
                         mainScreen.showMainScreen(historyManager);
                         break;
                     case 2:
+
                         if(historyManager.getHistory().isEmpty()){
                             System.out.println("Empty List");
                         }else {
                             historyView.show(historyManager.getHistory());
+                            break;
                         }
                     case 9:
                         System.out.println("Thank you for using our conversion system!");

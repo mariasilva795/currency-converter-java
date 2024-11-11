@@ -20,7 +20,10 @@ public class CurrencyHistoryManager {
                 LocalDateTime.now().toString()
         );
 
+        new CurrencyHistoryFileWriter().writeHistoryToFile(historyCurrency);
+
         listHistoryCurrency.add(historyCurrency);
+
     }
 
     public List<CurrencyHistory> getHistory(){
