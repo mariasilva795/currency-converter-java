@@ -1,0 +1,29 @@
+version: '3.8'
+
+services:
+  app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    depends_on:
+      - postgres
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/currencydb
+      - SPRING_DATASOURCE_USERNAME=postgres
+      - SPRING_DATASOURCE_PASSWORD=postgres
+    ports:
+      - "8080:8080"  # Mapea el puerto 8080 de la aplicación Java
+
+  postgres:
+    image: postgres:13
+    environment:
+      POSTGRES_DB: currencydb           # Nombre de la base de datos que se creará
+      POSTGRES_USER: postgres            # Usuario de PostgreSQL
+      POSTGRES_PASSWORD: postgres        # Contraseña para el usuario
+    volumes:
+      - pgdata:/var/lib/postgresql/data  # Volumen para persistencia de datos
+    ports:
+      - "5432:5432"                      # Mapea el puerto 5432 de PostgreSQL
+
+volumes:
+  pgdata:
