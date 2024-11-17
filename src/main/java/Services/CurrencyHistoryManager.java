@@ -1,6 +1,7 @@
 package Services;
 
 import Records.CurrencyHistory;
+import Repository.CurrencyHistoryRepository;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,7 +20,7 @@ public class CurrencyHistoryManager {
     /**
      * Stores all currency conversion history entries.
      */
-    private final ArrayList<CurrencyHistory> listHistoryCurrency = new ArrayList<>();
+    private final CurrencyHistoryRepository repository = new CurrencyHistoryRepositoryImpl();
 
     /**
      * Adds a new currency conversion entry to the history and saves it to a file.
@@ -30,6 +31,7 @@ public class CurrencyHistoryManager {
      * @param conversionResult the result of the conversion in the target currency
      * @param dateTime the date and time of the conversion as a String
      */
+
     public void addHistory(String baseCurrencyCode, double amount, String targetCurrencyCode, double conversionResult, String dateTime) {
 
         CurrencyHistory historyCurrency = new CurrencyHistory(
@@ -40,9 +42,8 @@ public class CurrencyHistoryManager {
                 LocalDateTime.now().toString()
         );
 
+        repository.save(historyCurrency);
         new CurrencyHistoryFileWriter().writeHistoryToFile(historyCurrency);
-
-        listHistoryCurrency.add(historyCurrency);
     }
 
     /**
@@ -51,6 +52,10 @@ public class CurrencyHistoryManager {
      * @return a list containing all saved currency conversion history entries
      */
     public List<CurrencyHistory> getHistory(){
-        return listHistoryCurrency;
+        return repository.findAll();
+    }
+
+    public void deleteHistory(){
+        repository.deleteAll();
     }
 }

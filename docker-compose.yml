@@ -8,22 +8,31 @@ services:
     depends_on:
       - postgres
     environment:
-      - SPRING_DATASOURCE_URL=jdbc:postgresql://postgres:5432/currencydb
-      - SPRING_DATASOURCE_USERNAME=postgres
-      - SPRING_DATASOURCE_PASSWORD=postgres
+      - JDBC_DATABASE_URL=jdbc:postgresql://postgres:5432/currencydb
+      - JDBC_DATABASE_USERNAME=postgres
+      - JDBC_DATABASE_PASSWORD=postgres
     ports:
-      - "8080:8080"  # Mapea el puerto 8080 de la aplicación Java
+      - "8080:8080"
+    networks:
+      - app-network
 
   postgres:
     image: postgres:13
     environment:
-      POSTGRES_DB: currencydb           # Nombre de la base de datos que se creará
-      POSTGRES_USER: postgres            # Usuario de PostgreSQL
-      POSTGRES_PASSWORD: postgres        # Contraseña para el usuario
+      POSTGRES_DB: currencydb
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
     volumes:
-      - pgdata:/var/lib/postgresql/data  # Volumen para persistencia de datos
+      - pgdata:/var/lib/postgresql/data
+      - ./src/main/java/Databases/up.sql:/docker-entrypoint-initdb.d/1.sql
     ports:
-      - "5432:5432"                      # Mapea el puerto 5432 de PostgreSQL
+      - "5432:5432"
+    networks:
+      - app-network
 
 volumes:
   pgdata:
+
+networks:
+  app-network:
+    driver: bridge

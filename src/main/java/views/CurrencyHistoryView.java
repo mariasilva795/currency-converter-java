@@ -9,7 +9,6 @@ import java.util.List;
 public class CurrencyHistoryView {
 
     public void show(List<CurrencyHistory> historyList){
-        System.out.println("Conversion Historyxx");
 
         for (CurrencyHistory history : historyList){
 
